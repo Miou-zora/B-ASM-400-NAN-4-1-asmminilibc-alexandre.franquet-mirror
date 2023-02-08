@@ -6,7 +6,8 @@
 ##
 
 SRC_SHARED_LIB	=	src/strlen.asm	\
-					src/strchr.asm
+					src/strchr.asm	\
+					src/strrchr.asm
 
 SRC_TESTS		=	tests/tests.c
 
@@ -20,11 +21,13 @@ CC				=	gcc
 
 OBJ				=	$(SRC_SHARED_LIB:%.asm=%.o)
 
-ASM_FLAGS		=	-felf64
+ASM_FLAGS		=	-f elf64 -DPIC
 
 INCLUDE			=	-I./include
 
-LD_FLAGS		=	-shared
+LD 				=	ld
+
+LD_FLAGS		=	-shared -fPIC
 
 NAME			=	libasm.so
 
@@ -39,10 +42,10 @@ all:		$(NAME)
 			$(NASM) $(ASM_FLAGS) $< -o $@
 
 $(NAME):	$(OBJ)
-			$(CC) $(LD_FLAGS) -o $(NAME) $(OBJ)
+			$(LD) $(LD_FLAGS) -o $(NAME) $(OBJ)
 
 tests_run:	fclean $(NAME)
-			$(CC) $(SRC_TESTS) $(TEST_FLAGS) $(INCLUDE) -o $(TEST_NAME) $(NAME)
+			$(CC) $(SRC_TESTS) $(TEST_FLAGS) $(INCLUDE) -o $(TEST_NAME) $(NAME) -g
 			./$(TEST_NAME)
 
 clean:
