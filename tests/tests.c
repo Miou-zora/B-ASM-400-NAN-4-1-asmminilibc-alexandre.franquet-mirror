@@ -26,6 +26,7 @@ void loader(void)
         my_strcspn = dlsym(handle, "strcspn");
         my_strlen = dlsym(handle, "strlen");
         my_strchr = dlsym(handle, "strchr");
+        my_strrchr = dlsym(handle, "strrchr");
         my_memset = dlsym(handle, "memset");
         my_memcpy = dlsym(handle, "memcpy");
         my_strcmp = dlsym(handle, "strcmp");
@@ -73,3 +74,42 @@ Test(strchr, str_without_char, .init = loader)
     cr_assert_eq(result, expected);
 }
 
+Test(strchr, str_without_two_char, .init = loader)
+{
+    char *result = my_strchr("abcbd", 'b');
+    char *expected = strchr("abcbd", 'b');
+
+    cr_assert_eq(result, expected);
+}
+
+Test(strrchr, casual, .init = loader)
+{
+    char *result = my_strrchr("abc", 'a');
+    char *expected = strrchr("abc", 'a');
+
+    cr_assert_eq(result, expected);
+}
+
+Test(strrchr, str_with_only_one_zero, .init = loader)
+{
+    char *result = my_strrchr("\0", '\0');
+    char *expected = strrchr("\0", '\0');
+
+    cr_assert_eq(result, expected);
+}
+
+Test(strrchr, str_without_char, .init = loader)
+{
+    char *result = my_strrchr("abc", 'd');
+    char *expected = strrchr("abc", 'd');
+
+    cr_assert_eq(result, expected);
+}
+
+Test(strrchr, str_without_two_char, .init = loader)
+{
+    char *result = my_strrchr("abcbd", 'b');
+    char *expected = strrchr("abcbd", 'b');
+
+    cr_assert_eq(result, expected);
+}
