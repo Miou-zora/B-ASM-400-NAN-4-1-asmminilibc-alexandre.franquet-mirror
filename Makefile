@@ -39,6 +39,7 @@ $(NAME): $(OBJ)
 
 tests_run: fclean    $(NAME)
 	$(CC)  $(SRC_TESTS) $(TEST_FLAGS) $(INCLUDE) -o $(TEST_NAME) $(NAME)
+	export LD_LIBRARY_PATH=$(shell pwd)
 	./$(TEST_NAME)
 
 clean:
