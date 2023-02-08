@@ -29,17 +29,19 @@ NAME		=    libasm.so
 
 RM                =    rm -rf
 
+LD_LIBRARY_PATH = $(shell pwd)
+export LD_LIBRARY_PATH
+
 all:	$(NAME)
 
 %.o:    %.asm
 	$(NASM) $(ASM_FLAGS) $< -o $@
 
 $(NAME): $(OBJ)
-	$(CC) $(LD_FLAGS) -o $(NAME) $(OBJ)
+	$(CC) -fpic $(LD_FLAGS) -o $(NAME) $(OBJ)
 
 tests_run: fclean    $(NAME)
-	$(CC)  $(SRC_TESTS) $(TEST_FLAGS) $(INCLUDE) -o $(TEST_NAME) $(NAME)
-	export LD_LIBRARY_PATH=$(shell pwd)
+	$(CC) -fpic $(SRC_TESTS) $(TEST_FLAGS) $(INCLUDE) -o $(TEST_NAME) $(NAME)
 	./$(TEST_NAME)
 
 clean:
