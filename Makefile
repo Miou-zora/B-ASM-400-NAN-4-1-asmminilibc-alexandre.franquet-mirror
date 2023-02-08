@@ -5,56 +5,57 @@
 ## Makefile
 ##
 
-SRC_SHARED_LIB  =    src/strlen.asm
+SRC_SHARED_LIB	=	src/strlen.asm	\
+					src/strchr.asm
 
-SRC_TESTS        =    tests/tests.c
+SRC_TESTS		=	tests/tests.c
 
-TEST_FLAGS        =    -lcriterion
+TEST_FLAGS		=	-lcriterion
 
-TEST_NAME        =    unit_tests
+TEST_NAME		=	unit_tests
 
-NASM            =    nasm
+NASM			=	nasm
 
-CC                =    gcc
+CC				=	gcc
 
-OBJ             =    $(SRC_SHARED_LIB:%.asm=%.o)
+OBJ				=	$(SRC_SHARED_LIB:%.asm=%.o)
 
-ASM_FLAGS        =    -felf64
+ASM_FLAGS		=	-felf64
 
-INCLUDE            =    -I./include
+INCLUDE			=	-I./include
 
-LD_FLAGS        =    -shared
+LD_FLAGS		=	-shared
 
-NAME		=    libasm.so
+NAME			=	libasm.so
 
-RM                =    rm -rf
+RM				=	rm -rf
 
 LD_LIBRARY_PATH = $(shell pwd)
 export LD_LIBRARY_PATH
 
-all:	$(NAME)
+all:		$(NAME)
 
-%.o:    %.asm
-	$(NASM) $(ASM_FLAGS) $< -o $@
+%.o:		%.asm
+			$(NASM) $(ASM_FLAGS) $< -o $@
 
-$(NAME): $(OBJ)
-	$(CC) -fpic $(LD_FLAGS) -o $(NAME) $(OBJ)
+$(NAME):	$(OBJ)
+			$(CC) $(LD_FLAGS) -o $(NAME) $(OBJ)
 
-tests_run: fclean    $(NAME)
-	$(CC) -fpic $(SRC_TESTS) $(TEST_FLAGS) $(INCLUDE) -o $(TEST_NAME) $(NAME)
-	./$(TEST_NAME)
+tests_run:	fclean $(NAME)
+			$(CC) $(SRC_TESTS) $(TEST_FLAGS) $(INCLUDE) -o $(TEST_NAME) $(NAME)
+			./$(TEST_NAME)
 
 clean:
-	$(RM) $(OBJ)
-	$(RM) $(TEST_NAME)
-	$(RM) *.gc*
+			$(RM) $(OBJ)
+			$(RM) $(TEST_NAME)
+			$(RM) *.gc*
 
-fclean:    clean
-	$(RM) $(NAME)
+fclean:		clean
+			$(RM) $(NAME)
 
-re:        fclean all
+re:			fclean all
 
-debug:    CFLAGS += -g
-debug:    re
+debug:		CFLAGS += -g
+debug:		re
 
-.PHONY:    all clean fclean re tclean debug tests_run $(NAME) %.o
+.PHONY:		all clean fclean re tclean debug tests_run $(NAME) %.asm

@@ -8,6 +8,8 @@
 #include <dlfcn.h>
 #include "minilib.h"
 #include <unistd.h>
+#include <string.h>
+#include <stdio.h>
 #include <criterion/criterion.h>
 
 void loader(void)
@@ -46,3 +48,28 @@ Test(strlen, str_with_only_one_zero, .init = loader)
 
     cr_assert_eq(result, expected);
 }
+
+Test(strchr, casual, .init = loader)
+{
+    char *result = my_strchr("abc", 'a');
+    char *expected = strchr("abc", 'a');
+
+    cr_assert_eq(result, expected);
+}
+
+Test(strchr, str_with_only_one_zero, .init = loader)
+{
+    char *result = my_strchr("\0", '\0');
+    char *expected = strchr("\0", '\0');
+
+    cr_assert_eq(result, expected);
+}
+
+Test(strchr, str_without_char, .init = loader)
+{
+    char *result = my_strchr("abc", 'd');
+    char *expected = strchr("abc", 'd');
+
+    cr_assert_eq(result, expected);
+}
+
