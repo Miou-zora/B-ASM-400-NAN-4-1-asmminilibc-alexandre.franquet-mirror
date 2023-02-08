@@ -113,3 +113,23 @@ Test(strrchr, str_without_two_char, .init = loader)
 
     cr_assert_eq(result, expected);
 }
+
+// Write tests for my_memset
+// This function set all byte of a void * to an int value of the lenght of size_t
+
+// Test(memset, casual, .init = loader)
+// {
+//     char *result = my_memset("abc", 'a', 3);
+//     char *expected = memset("abc", 'a', 3);
+
+//     cr_assert_eq(result, expected);
+// }
+
+// Test(memset, str_with_only_one_zero, .init = loader)
+// {
+//     char *result = my_memset("\0", '\0', 1);
+//     char *expected = memset("\0", '\0', 1);
+
+//     cr_assert_eq(result, expected);
+// }
+
