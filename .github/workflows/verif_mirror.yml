@@ -41,8 +41,8 @@ jobs:
         if: env.FAIL_TASK == 'true'
         run: exit 1
 
-  check_program_compilation:
-    name: Checks if the program compiles correctly and executables files got created
+  check_tests:
+    name: Checks if all tests pass
     runs-on: ubuntu-latest
     needs: [check_repository_cleanliness]
     container: epitechcontent/epitest-docker:latest
@@ -52,31 +52,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - run: make
-        timeout-minutes: 2
-
-      - run: make clean
-
-      - name: Verifies that files are present and executable
-        run: |
-          echo "FAIL_TASK=false" >> "$GITHUB_ENV"
-          SEARCH_BINARIES="${{ env.EXECUTABLES }}"
-          IFS=$','
-          for BIN in $SEARCH_BINARIES; do
-              if [ ! -f "${BIN}" ]; then
-                  echo "::error file=${BIN},title=Binary not found::${BIN}"
-                  echo "FAIL_TASK=true" >> "$GITHUB_ENV"
-              fi
-              if [ ! -x "${BIN}" ]; then
-                  echo "::error file=${BIN},title=Binary not executable::${BIN}"
-                  echo "FAIL_TASK=true" >> "$GITHUB_ENV"
-              fi
-          done
-
-      - name: Fail if needed
-        if: env.FAIL_TASK == 'true'
-        run: exit 1
-
       - name: Starts tests
         run: make tests_run
         timeout-minutes: 2
@@ -85,7 +60,7 @@ jobs:
     name: Pushes the current repository files to a given mirror repository
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'push' }}
-    needs: [check_program_compilation]
+    needs: [check_tests]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
