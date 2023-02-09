@@ -37,9 +37,6 @@ NAME			=	libasm.so
 
 RM				=	rm -rf
 
-LD_LIBRARY_PATH = $(shell pwd)
-export LD_LIBRARY_PATH
-
 all:		$(NAME)
 
 %.o:		%.asm
