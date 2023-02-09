@@ -218,3 +218,51 @@ Test(memcpy, with_long, .init = loader)
     for (int i = 0; i < 3; i++)
         cr_assert_eq(result[i], expected[i]);
 }
+
+Test(strcmp, casual, .init = loader)
+{
+    int result = my_strcmp("abc", "abc");
+    int expected = strcmp("abc", "abc");
+
+    cr_assert_eq(result, expected);
+}
+
+Test(strcmp, str_with_only_one_zero, .init = loader)
+{
+    int result = my_strcmp("\0", "\0");
+    int expected = strcmp("\0", "\0");
+
+    cr_assert_eq(result, expected);
+}
+
+Test(strcmp, str_first_greater, .init = loader)
+{
+    int result = my_strcmp("abc", "ab");
+    int expected = strcmp("abc", "ab");
+
+    cr_assert_eq(result, expected);
+}
+
+Test(strcmp, str_second_greater, .init = loader)
+{
+    int result = my_strcmp("ab", "abc");
+    int expected = strcmp("ab", "abc");
+
+    cr_assert_eq(result, expected);
+}
+
+Test(strcmp, str_first_greater_with_zero, .init = loader)
+{
+    int result = my_strcmp("abc", "abd");
+    int expected = strcmp("abc", "abd");
+
+    cr_assert_eq(result, expected);
+}
+
+Test(strcmp, str_second_greater_with_zero, .init = loader)
+{
+    int result = my_strcmp("abd", "abc");
+    int expected = strcmp("abd", "abc");
+
+    cr_assert_eq(result, expected);
+}
