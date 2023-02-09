@@ -167,3 +167,54 @@ Test(memset, with_long, .init = loader)
     for (int i = 0; i < 3; i++)
         cr_assert_eq(result[i], expected[i]);
 }
+
+Test(memcpy, casual, .init = loader)
+{
+    char *result_to_modif = malloc(sizeof(char) * 3);
+    char *expected_to_modif = malloc(sizeof(char) * 3);
+    char *result = my_memcpy(result_to_modif, "abc", 3);
+    char *expected = memcpy(expected_to_modif, "abc", 3);
+
+    for (int i = 0; i < 3; i++)
+        cr_assert_eq(result[i], expected[i]);
+}
+
+Test(memcpy, str_with_only_one_zero, .init = loader)
+{
+    char *result_to_modif = malloc(sizeof(char) * 1);
+    char *expected_to_modif = malloc(sizeof(char) * 1);
+    char *result = my_memcpy(result_to_modif, "\0", 1);
+    char *expected = memcpy(expected_to_modif, "\0", 1);
+
+    for (int i = 0; i < 1; i++)
+        cr_assert_eq(result[i], expected[i]);
+}
+
+Test(memcpy, zero_modif, .init = loader)
+{
+    char *result_to_modif = malloc(sizeof(char) * 3);
+    char *expected_to_modif = malloc(sizeof(char) * 3);
+    char *result = my_memcpy(result_to_modif, "abc", 0);
+    char *expected = memcpy(expected_to_modif, "abc", 0);
+
+    for (int i = 0; i < 3; i++)
+        cr_assert_eq(result[i], expected[i]);
+}
+
+Test(memcpy, with_long, .init = loader)
+{
+    long *result_to_modif = malloc(sizeof(long) * 3);
+    result_to_modif[0] = 1;
+    result_to_modif[1] = 2;
+    result_to_modif[2] = 3;
+    long *expected_to_modif = malloc(sizeof(long) * 3);
+    expected_to_modif[0] = 1;
+    expected_to_modif[1] = 2;
+    expected_to_modif[2] = 3;
+
+    long *result = my_memcpy(result_to_modif, "abc", 2);
+    long *expected = memcpy(expected_to_modif, "abc", 2);
+
+    for (int i = 0; i < 3; i++)
+        cr_assert_eq(result[i], expected[i]);
+}
