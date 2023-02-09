@@ -30,6 +30,7 @@ void loader(void)
         my_memset = dlsym(handle, "memset");
         my_memcpy = dlsym(handle, "memcpy");
         my_strcmp = dlsym(handle, "strcmp");
+        my_strncmp = dlsym(handle, "strncmp");
         my_strstr = dlsym(handle, "strstr");
     }
 }
@@ -343,4 +344,52 @@ Test(memmove, string_src_overlap_dest, .init = loader)
 
     for (int i = 0; i < 4; i++)
         cr_assert_eq(result[i], expected[i]);
+}
+
+Test(strncmp, casual, .init = loader)
+{
+    int result = my_strncmp("abc", "abc", 4);
+    int expected = strncmp("abc", "abc", 4);
+
+    cr_assert_eq(result, expected);
+}
+
+Test(strncmp, str_with_only_one_zero, .init = loader)
+{
+    int result = my_strncmp("\0", "\0", 1);
+    int expected = strncmp("\0", "\0", 1);
+
+    cr_assert_eq(result, expected);
+}
+
+Test(strncmp, str_first_greater, .init = loader)
+{
+    int result = my_strncmp("abc", "ab", 3);
+    int expected = strncmp("abc", "ab", 3);
+
+    cr_assert_eq(result, expected);
+}
+
+Test(strncmp, str_second_greater, .init = loader)
+{
+    int result = my_strncmp("ab", "abc", 3);
+    int expected = strncmp("ab", "abc", 3);
+
+    cr_assert_eq(result, expected);
+}
+
+Test(strncmp, str_first_greater_with_zero, .init = loader)
+{
+    int result = my_strncmp("abc", "abd", 4);
+    int expected = strncmp("abc", "abd", 4);
+
+    cr_assert_eq(result, expected);
+}
+
+Test(strncmp, str_second_greater_with_zero, .init = loader)
+{
+    int result = my_strncmp("abd", "abc", 4);
+    int expected = strncmp("abd", "abc", 4);
+
+    cr_assert_eq(result, expected);
 }
