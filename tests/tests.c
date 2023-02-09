@@ -113,3 +113,57 @@ Test(strrchr, str_without_two_char, .init = loader)
 
     cr_assert_eq(result, expected);
 }
+
+Test(memset, casual, .init = loader)
+{
+
+    char *result_to_modif = strdup("abc");
+    char *expected_to_modif = strdup("abc");
+    char *result = my_memset(result_to_modif, 'a', 3);
+    char *expected = memset(expected_to_modif, 'a', 3);
+
+    for (int i = 0; i < 3; i++)
+        cr_assert_eq(result[i], expected[i]);
+}
+
+Test(memset, str_with_only_one_zero, .init = loader)
+{
+
+    char *result_to_modif = strdup("abc");
+    char *expected_to_modif = strdup("abc");
+    char *result = my_memset(result_to_modif, '\0', 1);
+    char *expected = memset(expected_to_modif, '\0', 1);
+
+    for (int i = 0; i < 3; i++) {
+        cr_assert_eq(result[i], expected[i]);
+    }
+}
+
+Test(memset, zero_modif, .init = loader)
+{
+    char *result_to_modif = strdup("abc");
+    char *expected_to_modif = strdup("abc");
+    char *result = my_memset(result_to_modif, '\0', 0);
+    char *expected = memset(expected_to_modif, '\0', 0);
+
+    for (int i = 0; i < 3; i++)
+        cr_assert_eq(result[i], expected[i]);
+}
+
+Test(memset, with_long, .init = loader)
+{
+    long *result_to_modif = malloc(sizeof(long) * 3);
+    result_to_modif[0] = 1;
+    result_to_modif[1] = 2;
+    result_to_modif[2] = 3;
+    long *expected_to_modif = malloc(sizeof(long) * 3);
+    expected_to_modif[0] = 1;
+    expected_to_modif[1] = 2;
+    expected_to_modif[2] = 3;
+
+    long *result = my_memset(result_to_modif, '\0', 2);
+    long *expected = memset(expected_to_modif, '\0', 2);
+
+    for (int i = 0; i < 3; i++)
+        cr_assert_eq(result[i], expected[i]);
+}
