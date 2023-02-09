@@ -9,7 +9,8 @@ SRC_SHARED_LIB	=	src/strlen.asm	\
 					src/strchr.asm	\
 					src/strrchr.asm	\
 					src/memset.asm	\
-					src/memcpy.asm
+					src/memcpy.asm	\
+					src/strcmp.asm
 
 SRC_TESTS		=	tests/tests.c
 
