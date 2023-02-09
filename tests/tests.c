@@ -161,8 +161,8 @@ Test(memset, with_long, .init = loader)
     expected_to_modif[1] = 2;
     expected_to_modif[2] = 3;
 
-    long *result = my_memset(result_to_modif, '\0', 2);
-    long *expected = memset(expected_to_modif, '\0', 2);
+    long *result = my_memset(result_to_modif, '\0', 24);
+    long *expected = memset(expected_to_modif, '\0', 24);
 
     for (int i = 0; i < 3; i++)
         cr_assert_eq(result[i], expected[i]);
