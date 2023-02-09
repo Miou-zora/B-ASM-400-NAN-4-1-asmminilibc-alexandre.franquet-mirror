@@ -14,23 +14,19 @@ strncmp:
 
 strncmp_loop:
     cmp ecx, edx; check if cursor is arrived to the end of n
-    jg strncmp_end_equal; if ended they a equal until n
+    jg strncmp_end; if ended they a equal until n
     mov r10b, byte[rsi + rcx]; move char of a + cursor in temp variable
     cmp byte[rdi + rcx], r10b; compare char of b + cursor and char of a + cursor
-    jne strncmp_end_notequal
+    jne strncmp_end
     inc rcx; if not increment cursor
     jmp strncmp_loop; restart the loop
 
-strncmp_end_notequal:; return greater
+strncmp_end:; return greater
     xor r10d, r10d
     xor r11d, r11d
     mov r10b, byte[rdi + rcx]
     mov r11b, byte[rsi + rcx]
     mov eax, r10d
     sub eax, r11d
-    leave
-    ret
-
-strncmp_end_equal:; return 0
     leave
     ret
