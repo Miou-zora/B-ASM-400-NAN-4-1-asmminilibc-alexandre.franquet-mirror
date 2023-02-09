@@ -114,22 +114,56 @@ Test(strrchr, str_without_two_char, .init = loader)
     cr_assert_eq(result, expected);
 }
 
-// Write tests for my_memset
-// This function set all byte of a void * to an int value of the lenght of size_t
+Test(memset, casual, .init = loader)
+{
 
-// Test(memset, casual, .init = loader)
-// {
-//     char *result = my_memset("abc", 'a', 3);
-//     char *expected = memset("abc", 'a', 3);
+    char *result_to_modif = strdup("abc");
+    char *expected_to_modif = strdup("abc");
+    char *result = my_memset(result_to_modif, 'a', 3);
+    char *expected = memset(expected_to_modif, 'a', 3);
 
-//     cr_assert_eq(result, expected);
-// }
+    for (int i = 0; i < 3; i++)
+        cr_assert_eq(result[i], expected[i]);
+}
 
-// Test(memset, str_with_only_one_zero, .init = loader)
-// {
-//     char *result = my_memset("\0", '\0', 1);
-//     char *expected = memset("\0", '\0', 1);
+Test(memset, str_with_only_one_zero, .init = loader)
+{
 
-//     cr_assert_eq(result, expected);
-// }
+    char *result_to_modif = strdup("abc");
+    char *expected_to_modif = strdup("abc");
+    char *result = my_memset(result_to_modif, '\0', 1);
+    char *expected = memset(expected_to_modif, '\0', 1);
 
+    for (int i = 0; i < 3; i++) {
+        cr_assert_eq(result[i], expected[i]);
+    }
+}
+
+Test(memset, zero_modif, .init = loader)
+{
+    char *result_to_modif = strdup("abc");
+    char *expected_to_modif = strdup("abc");
+    char *result = my_memset(result_to_modif, '\0', 0);
+    char *expected = memset(expected_to_modif, '\0', 0);
+
+    for (int i = 0; i < 3; i++)
+        cr_assert_eq(result[i], expected[i]);
+}
+
+Test(memset, with_long, .init = loader)
+{
+    long *result_to_modif = malloc(sizeof(long) * 3);
+    result_to_modif[0] = 1;
+    result_to_modif[1] = 2;
+    result_to_modif[2] = 3;
+    long *expected_to_modif = malloc(sizeof(long) * 3);
+    expected_to_modif[0] = 1;
+    expected_to_modif[1] = 2;
+    expected_to_modif[2] = 3;
+
+    long *result = my_memset(result_to_modif, '\0', 2);
+    long *expected = memset(expected_to_modif, '\0', 2);
+
+    for (int i = 0; i < 3; i++)
+        cr_assert_eq(result[i], expected[i]);
+}

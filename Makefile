@@ -28,7 +28,7 @@ INCLUDE			=	-I./include
 
 LD 				=	ld
 
-LD_FLAGS		=	-shared -fPIC
+LD_FLAGS		=	-shared
 
 NAME			=	libasm.so
 
@@ -46,7 +46,7 @@ $(NAME):	$(OBJ)
 			$(LD) $(LD_FLAGS) -o $(NAME) $(OBJ)
 
 tests_run:	fclean $(NAME)
-			$(CC) $(SRC_TESTS) $(TEST_FLAGS) $(INCLUDE) -o $(TEST_NAME) $(NAME)
+			$(CC) $(SRC_TESTS) $(TEST_FLAGS) $(INCLUDE) -o $(TEST_NAME) -ldl
 			./$(TEST_NAME)
 
 clean:
