@@ -419,3 +419,92 @@ Test(strncmp, zero, .init = loader)
 
     cr_assert_eq(result, expected);
 }
+
+Test(strcasecmp, casual, .init = loader)
+{
+    int result = my_strcasecmp("abe", "abc");
+    int expected = strcasecmp("abe", "abc");
+
+    cr_assert_eq(result, expected);
+}
+
+Test(strcasecmp, maj_no_diff, .init = loader)
+{
+    int result = my_strcasecmp("abC", "abc");
+    int expected = strcasecmp("abC", "abc");
+
+    cr_assert_eq(result, expected);
+}
+
+Test(strcasecmp, maj_diff, .init = loader)
+{
+    int result = my_strcasecmp("abC", "abd");
+    int expected = strcasecmp("abC", "abd");
+
+    cr_assert_eq(result, expected);
+}
+
+
+Test(strcasecmp, double_maj, .init = loader)
+{
+    int result = my_strcasecmp("abC", "abC");
+    int expected = strcasecmp("abC", "abC");
+
+    cr_assert_eq(result, expected);
+}
+
+Test(strcasecmp, right_maj, .init = loader)
+{
+    int result = my_strcasecmp("abe", "abC");
+    int expected = strcasecmp("abe", "abC");
+
+    cr_assert_eq(result, expected);
+}
+
+Test(strcasecmp, no_letter, .init = loader)
+{
+    int result = my_strcasecmp("ab]", "ab]");
+    int expected = strcasecmp("ab]", "ab]");
+
+    cr_assert_eq(result, expected);
+}
+
+Test(strcasecmp, no_character, .init = loader)
+{
+    int result = my_strcasecmp("\0", "\0");
+    int expected = strcasecmp("\0", "\0");
+
+    cr_assert_eq(result, expected);
+}
+
+Test(strcasecmp, more_character_left, .init = loader)
+{
+    int result = my_strcasecmp("a\0", "\0");
+    int expected = strcasecmp("a\0", "\0");
+
+    cr_assert_eq(result, expected);
+}
+
+Test(strcasecmp, more_character_right, .init = loader)
+{
+    int result = my_strcasecmp("\0", "a\0");
+    int expected = strcasecmp("\0", "a\0");
+
+    cr_assert_eq(result, expected);
+}
+
+Test(strcasecmp, special_char_maj, .init = loader)
+{
+    int result = my_strcasecmp("@\0", "E\0");
+    int expected = strcasecmp("@\0", "E\0");
+
+    cr_assert_eq(result, expected);
+}
+
+Test(strcasecmp, special_char_min, .init = loader)
+{
+    int result = my_strcasecmp("@\0", "e\0");
+    int expected = strcasecmp("@\0", "e\0");
+
+    cr_assert_eq(result, expected);
+}
