@@ -393,3 +393,35 @@ Test(strncmp, str_second_greater_with_zero, .init = loader)
 
     cr_assert_eq(result, expected);
 }
+
+Test(strncmp, str_more, .init = loader)
+{
+    int result = my_strncmp("abc", "abc", 5);
+    int expected = strncmp("abc", "abc", 5);
+
+    cr_assert_eq(result, expected);
+}
+
+
+Test(strncmp, little, .init = loader)
+{
+    int result = my_strncmp("ac", "ab", 1);
+    int expected = strncmp("ac", "ab", 1);
+
+    printf("result = %d, expected = %d\n", result, expected);
+    fflush(stdout);
+
+    cr_assert_eq(result, expected);
+}
+
+
+Test(strncmp, zero, .init = loader)
+{
+    int result = my_strncmp("bb", "ab", 0);
+    int expected = strncmp("bb", "ab", 0);
+
+    printf("result = %d, expected = %d\n", result, expected);
+    fflush(stdout);
+
+    cr_assert_eq(result, expected);
+}
