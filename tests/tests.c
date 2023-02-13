@@ -198,8 +198,12 @@ Test(memcpy, zero_modif, .init = loader)
     char *result = my_memcpy(result_to_modif, "abc", 0);
     char *expected = memcpy(expected_to_modif, "abc", 0);
 
+    cr_assert_eq(result, result_to_modif);
     for (int i = 0; i < 3; i++)
-        cr_assert_eq(result[i], expected[i]);
+        cr_assert_eq(result[i], result_to_modif[i]);
+    cr_assert_eq(expected, expected_to_modif);
+    for (int i = 0; i < 3; i++)
+        cr_assert_eq(expected[i], expected_to_modif[i]);
 }
 
 Test(memcpy, with_long, .init = loader)
@@ -297,8 +301,12 @@ Test(memmove, zero_modif, .init = loader)
     char *result = my_memmove(result_to_modif, "abc", 0);
     char *expected = memmove(expected_to_modif, "abc", 0);
 
+    cr_assert_eq(result, result_to_modif);
     for (int i = 0; i < 3; i++)
-        cr_assert_eq(result[i], expected[i]);
+        cr_assert_eq(result[i], result_to_modif[i]);
+    cr_assert_eq(expected, expected_to_modif);
+    for (int i = 0; i < 3; i++)
+        cr_assert_eq(expected[i], expected_to_modif[i]);
 }
 
 Test(memmove, with_long, .init = loader)
