@@ -516,3 +516,57 @@ Test(strcasecmp, special_char_min, .init = loader)
 
     cr_assert_eq(result, expected);
 }
+
+Test(strstr, casual, .init = loader)
+{
+    char *input = "abc";
+    char *result = my_strstr(input, "bc");
+    char *expected = strstr(input, "bc");
+
+    cr_assert_eq(result, expected);
+}
+
+Test(strstr, no_str_in_str, .init = loader)
+{
+    char *input = "abc";
+    char *result = my_strstr(input, "d");
+    char *expected = strstr(input, "d");
+
+    cr_assert_eq(result, expected);
+}
+
+Test(strstr, zero_value, .init = loader)
+{
+    char *input = "abc";
+    char *result = my_strstr(input, "\0");
+    char *expected = strstr(input, "\0");
+
+    cr_assert_eq(result, expected);
+}
+
+Test(strstr, big_two_value, .init = loader)
+{
+    char *input = "abc";
+    char *result = my_strstr(input, "azer");
+    char *expected = strstr(input, "azer");
+
+    cr_assert_eq(result, expected);
+}
+
+Test(strstr, empty_first_parameter, .init = loader)
+{
+    char *input = "";
+    char *result = my_strstr(input, "bc");
+    char *expected = strstr(input, "bc");
+
+    cr_assert_eq(result, expected);
+}
+
+Test(strstr, all_empty, .init = loader)
+{
+    char *input = "";
+    char *result = my_strstr(input, "");
+    char *expected = strstr(input, "");
+
+    cr_assert_eq(result, expected);
+}

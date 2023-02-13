@@ -14,6 +14,7 @@ SRC_SHARED_LIB	=	src/strlen.asm		\
 					src/memmove.asm		\
 					src/strncmp.asm		\
 					src/strcasecmp.asm	\
+					src/strstr.asm		\
 
 SRC_TESTS		=	tests/tests.c
 
