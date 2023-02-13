@@ -5,14 +5,15 @@
 ## Makefile
 ##
 
-SRC_SHARED_LIB	=	src/strlen.asm	\
-					src/strchr.asm	\
-					src/strrchr.asm	\
-					src/memset.asm	\
-					src/memcpy.asm	\
-					src/strcmp.asm	\
-					src/memmove.asm	\
-					src/strncmp.asm	\
+SRC_SHARED_LIB	=	src/strlen.asm		\
+					src/strchr.asm		\
+					src/strrchr.asm		\
+					src/memset.asm		\
+					src/memcpy.asm		\
+					src/strcmp.asm		\
+					src/memmove.asm		\
+					src/strncmp.asm		\
+					src/strcasecmp.asm	\
 
 SRC_TESTS		=	tests/tests.c
 

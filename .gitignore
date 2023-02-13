@@ -1,4 +1,3 @@
 *.so
 *.o
 unit_tests
-epitest.sh
