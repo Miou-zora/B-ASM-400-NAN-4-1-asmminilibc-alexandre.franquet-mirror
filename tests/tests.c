@@ -620,3 +620,53 @@ Test(strpbrk, empty_both, .init = loader)
 
     cr_assert_eq(result, expected);
 }
+
+Test(strcspn, casual, .init = loader)
+{
+    char str[] = "tonsoir a tous et a toute\n";
+    char not_wanted[] = "te";
+    size_t result = my_strcspn(str, not_wanted);
+    size_t expected = strcspn(str, not_wanted);
+
+    cr_assert_eq(result, expected);
+}
+
+Test(strcspn, not_in_str, .init = loader)
+{
+    char str[] = "tonsoir a tous et a toute\n";
+    char not_wanted[] = "z";
+    size_t result = my_strcspn(str, not_wanted);
+    size_t expected = strcspn(str, not_wanted);
+
+    cr_assert_eq(result, expected);
+}
+
+Test(strcspn, empty_str, .init = loader)
+{
+    char str[] = "";
+    char not_wanted[] = "te";
+    size_t result = my_strcspn(str, not_wanted);
+    size_t expected = strcspn(str, not_wanted);
+
+    cr_assert_eq(result, expected);
+}
+
+Test(strcspn, empty_not_wanted, .init = loader)
+{
+    char str[] = "tonsoir a tous et a toute\n";
+    char not_wanted[] = "";
+    size_t result = my_strcspn(str, not_wanted);
+    size_t expected = strcspn(str, not_wanted);
+
+    cr_assert_eq(result, expected);
+}
+
+Test(strcspn, empty_both, .init = loader)
+{
+    char str[] = "";
+    char not_wanted[] = "";
+    size_t result = my_strcspn(str, not_wanted);
+    size_t expected = strcspn(str, not_wanted);
+
+    cr_assert_eq(result, expected);
+}
