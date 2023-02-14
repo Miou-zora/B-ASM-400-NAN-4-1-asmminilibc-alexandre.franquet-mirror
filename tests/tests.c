@@ -570,3 +570,53 @@ Test(strstr, all_empty, .init = loader)
 
     cr_assert_eq(result, expected);
 }
+
+Test(strpbrk, casual, .init = loader)
+{
+    char str[] = "tonsoir a tous et a toute\n";
+    char not_wanted[] = "te";
+    char *result = my_strpbrk(str, not_wanted);
+    char *expected = strpbrk(str, not_wanted);
+
+    cr_assert_eq(result, expected);
+}
+
+Test(strpbrk, not_in_str, .init = loader)
+{
+    char str[] = "tonsoir a tous et a toute\n";
+    char not_wanted[] = "z";
+    char *result = my_strpbrk(str, not_wanted);
+    char *expected = strpbrk(str, not_wanted);
+
+    cr_assert_eq(result, expected);
+}
+
+Test(strpbrk, empty_str, .init = loader)
+{
+    char str[] = "";
+    char not_wanted[] = "te";
+    char *result = my_strpbrk(str, not_wanted);
+    char *expected = strpbrk(str, not_wanted);
+
+    cr_assert_eq(result, expected);
+}
+
+Test(strpbrk, empty_not_wanted, .init = loader)
+{
+    char str[] = "tonsoir a tous et a toute\n";
+    char not_wanted[] = "";
+    char *result = my_strpbrk(str, not_wanted);
+    char *expected = strpbrk(str, not_wanted);
+
+    cr_assert_eq(result, expected);
+}
+
+Test(strpbrk, empty_both, .init = loader)
+{
+    char str[] = "";
+    char not_wanted[] = "";
+    char *result = my_strpbrk(str, not_wanted);
+    char *expected = strpbrk(str, not_wanted);
+
+    cr_assert_eq(result, expected);
+}
