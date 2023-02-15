@@ -16,7 +16,7 @@ strncmp:
 
 strncmp_loop:
     cmp ecx, edx; check if cursor is arrived to the end of n
-    jg strncmp_return; if ended they a equal until n
+    ja strncmp_return; if ended they a equal until n
     mov r10b, byte[rsi + rcx]; move char of a + cursor in temp variable
     cmp byte[rdi + rcx], r10b; compare char of b + cursor and char of a + cursor
     jne strncmp_end
@@ -32,5 +32,10 @@ strncmp_end:; return greater
     sub eax, r11d
 
 strncmp_return:
+    leave
+    ret
+
+temp:
+    mov rax, 1
     leave
     ret
