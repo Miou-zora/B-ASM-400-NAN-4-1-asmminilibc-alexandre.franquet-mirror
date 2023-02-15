@@ -433,9 +433,6 @@ Test(strncmp, more_than_hundred_letter, .init = loader)
     int result = my_strncmp("bb", "ab", -3);
     int expected = strncmp("bb", "ab", -3);
 
-    printf("result = %d, expected = %d\n", result, expected);
-    fflush(stdout);
-
     cr_assert_eq(result, expected);
 }
 
@@ -614,6 +611,18 @@ Test(strstr, big_second_parameter, .init = loader)
     char *input = "qsdfghjklmwxcvbn";
     char *result = my_strstr(input, "azertyuiopqsdfghjklmwxcvbn");
     char *expected = strstr(input, "azertyuiopqsdfghjklmwxcvbn");
+
+    cr_assert_eq(result, expected);
+}
+
+Test(strstr, big_both_parameter, .init = loader)
+{
+    char *input = "This is a simple string";
+    char *result = my_strstr(input, "simple");
+    char *expected = strstr(input, "simple");
+
+    printf("result = %s, expected = %s\n", result, expected);
+    fflush(stdout);
 
     cr_assert_eq(result, expected);
 }
