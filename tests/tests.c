@@ -428,6 +428,17 @@ Test(strncmp, zero, .init = loader)
     cr_assert_eq(result, expected);
 }
 
+Test(strncmp, more_than_hundred_letter, .init = loader)
+{
+    int result = my_strncmp("bb", "ab", -3);
+    int expected = strncmp("bb", "ab", -3);
+
+    printf("result = %d, expected = %d\n", result, expected);
+    fflush(stdout);
+
+    cr_assert_eq(result, expected);
+}
+
 Test(strcasecmp, casual, .init = loader)
 {
     int result = my_strcasecmp("abe", "abc");
@@ -567,6 +578,42 @@ Test(strstr, all_empty, .init = loader)
     char *input = "";
     char *result = my_strstr(input, "");
     char *expected = strstr(input, "");
+
+    cr_assert_eq(result, expected);
+}
+
+Test(strstr, empty_second_parameter, .init = loader)
+{
+    char *input = "abc";
+    char *result = my_strstr(input, "");
+    char *expected = strstr(input, "");
+
+    cr_assert_eq(result, expected);
+}
+
+Test(strstr, empty_both_parameter, .init = loader)
+{
+    char *input = "";
+    char *result = my_strstr(input, "");
+    char *expected = strstr(input, "");
+
+    cr_assert_eq(result, expected);
+}
+
+Test(strstr, big_first_parameter, .init = loader)
+{
+    char *input = "azertyuiopqsdfghjklmwxcvbn";
+    char *result = my_strstr(input, "qsdfghjklmwxcvbn");
+    char *expected = strstr(input, "qsdfghjklmwxcvbn");
+
+    cr_assert_eq(result, expected);
+}
+
+Test(strstr, big_second_parameter, .init = loader)
+{
+    char *input = "qsdfghjklmwxcvbn";
+    char *result = my_strstr(input, "azertyuiopqsdfghjklmwxcvbn");
+    char *expected = strstr(input, "azertyuiopqsdfghjklmwxcvbn");
 
     cr_assert_eq(result, expected);
 }
