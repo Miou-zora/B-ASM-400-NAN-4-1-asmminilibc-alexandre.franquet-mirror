@@ -435,6 +435,14 @@ Test(strncmp, more_than_hundred_letter, .init = loader)
     cr_assert_eq(result, expected);
 }
 
+Test(strncmp, more_than_hundred_letter, .init = loader)
+{
+    int result = my_strncmp("bb", "ab", -3);
+    int expected = strncmp("bb", "ab", -3);
+
+    cr_assert_eq(result, expected);
+}
+
 Test(strcasecmp, casual, .init = loader)
 {
     int result = my_strcasecmp("abe", "abc");
