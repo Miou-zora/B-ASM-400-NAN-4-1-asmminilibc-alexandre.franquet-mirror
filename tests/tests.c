@@ -30,7 +30,6 @@ void loader(void)
         my_memset = dlsym(handle, "memset");
         my_memcpy = dlsym(handle, "memcpy");
         my_strcmp = dlsym(handle, "strcmp");
-        my_strncmp = dlsym(handle, "strncmp");
         my_strstr = dlsym(handle, "strstr");
     }
 }
@@ -422,19 +421,16 @@ Test(strncmp, little, .init = loader)
 
 Test(strncmp, zero, .init = loader)
 {
-    int result = my_strncmp("bb", "ab", 0);
-    int expected = strncmp("bb", "ab", 0);
+    int result = my_strncmp("a", "b", 0);
+    int expected = strncmp("a", "b", 0);
 
     cr_assert_eq(result, expected);
 }
 
 Test(strncmp, more_than_hundred_letter, .init = loader)
 {
-    int result = my_strncmp("bb", "ab", -3);
-    int expected = strncmp("bb", "ab", -3);
-
-    printf("result = %d, expected = %d\n", result, expected);
-    fflush(stdout);
+    int result = my_strncmp("bb", "ab", -1);
+    int expected = strncmp("bb", "ab", -1);
 
     cr_assert_eq(result, expected);
 }
@@ -618,6 +614,15 @@ Test(strstr, big_second_parameter, .init = loader)
     cr_assert_eq(result, expected);
 }
 
+Test(strstr, big_both_parameter, .init = loader)
+{
+    char *input = "This is a simple string";
+    char *result = my_strstr(input, "simple");
+    char *expected = strstr(input, "simple");
+
+    cr_assert_eq(result, expected);
+}
+
 Test(strpbrk, casual, .init = loader)
 {
     char str[] = "tonsoir a tous et a toute\n";
@@ -716,4 +721,133 @@ Test(strcspn, empty_both, .init = loader)
     size_t expected = strcspn(str, not_wanted);
 
     cr_assert_eq(result, expected);
+}
+
+Test(test_strcmp, normal_strncmp, .init = loader)
+{
+    char *str = "allo";
+    char *str2 = "testou";
+
+    cr_assert_eq(my_strncmp(str, str2, 3),strncmp(str, str2, 3));
+    cr_assert_str_eq(str, "allo");
+    cr_assert_str_eq(str2, "testou");
+}
+
+Test(test_strcmp, equal_strncmp, .init = loader)
+{
+    char *str = "testou";
+    char *str2 = "testou";
+
+    cr_assert_eq(my_strncmp(str, str2, 1),strncmp(str, str2, 1));
+    cr_assert_str_eq(str, "testou");
+    cr_assert_str_eq(str2, "testou");
+}
+
+Test(test_strcmp, no_string_strncmp, .init = loader)
+{
+    char *str = "";
+    char *str2 = "";
+
+    cr_assert_eq(my_strncmp(str, str2, 3),strncmp(str, str2, 3));
+    cr_assert_str_eq(str, "");
+    cr_assert_str_eq(str2, "");
+}
+
+Test(test_strcmp, one_empty_string_strncmp, .init = loader)
+{
+    char *str = "testT";
+    char *str2 = "testt";
+
+    cr_assert_eq(my_strncmp(str, str2, 0),strncmp(str, str2, 0));
+    cr_assert_str_eq(str, "testT");
+    cr_assert_str_eq(str2, "testt");
+}
+
+Test(test_strcmp, zero_string_strncmp, .init = loader)
+{
+    char *str = "a";
+    char *str2 = "b";
+
+    cr_assert_eq(my_strncmp(str, str2, 0),strncmp(str, str2, 0));
+    cr_assert_str_eq(str, "a");
+    cr_assert_str_eq(str2, "b");
+}
+
+Test(my_strncmp, falsee, .init=loader)
+{
+    cr_assert_eq(my_strncmp("azc", "abc", 3), strncmp("azc", "abc", 3));
+}
+
+Test(my_strncmp, basic, .init=loader)
+{
+    cr_assert_eq(my_strncmp("abc", "abc", 3), strncmp("abc", "abc", 3));
+}
+
+Test(my_strncmp, basic2, .init=loader)
+{
+    cr_assert_eq(my_strncmp("abc", "abz", 2), strncmp("abc", "abz", 2));
+}
+
+Test(my_strncmp, basic3, .init=loader)
+{
+    cr_assert_eq(my_strncmp("abz", "abc", 2), strncmp("abz", "abc", 2));
+}
+
+Test(my_strncmp, long_str1, .init=loader)
+{
+    cr_assert_eq(my_strncmp("azert", "abz", 3), strncmp("azert", "abz", 3));
+}
+
+Test(my_strncmp, long_str2, .init=loader)
+{
+    cr_assert_eq(my_strncmp("azert", "abz", 1), strncmp("azert", "abz", 1));
+}
+
+Test(my_strncmp, long_str3, .init=loader)
+{
+    cr_assert_eq(my_strncmp("azert", "abz", 5), strncmp("azert", "abz", 5));
+}
+
+Test(my_strncmp, long_str4, .init=loader)
+{
+    cr_assert_eq(my_strncmp("Lylian", "L", 1), strncmp("Lylian", "L", 1));
+}
+
+Test(my_strncmp, long_str5, .init=loader)
+{
+    cr_assert_eq(my_strncmp("\0", "\0", 2), strncmp("\0", "\0", 2));
+}
+
+Test(my_strncmp, long_str6, .init=loader)
+{
+    cr_assert_eq(my_strncmp("\0", "\0", 1), strncmp("\0", "\0", 1));
+}
+
+Test(my_strncmp, long_str7, .init=loader)
+{
+    cr_assert_eq(my_strncmp("\0", "\0", 0), strncmp("\0", "\0", 0));
+}
+
+Test(my_strncmp, long_str8, .init=loader)
+{
+    cr_assert_eq(my_strncmp("hello", "hello World", 12), strncmp("hello", "hello World", 12));
+}
+
+Test(my_strncmp, long_str9, .init=loader)
+{
+    cr_assert_eq(my_strncmp("hello", "hello World", 10), strncmp("hello", "hello World", 10));
+}
+
+Test(my_strncmp, long_type, .init=loader)
+{
+    char *str = calloc(100, sizeof(char));
+    char *str2 = calloc(100, sizeof(char));
+
+    str[0] = -1;
+    str2[0] = -1;
+
+    str[1] = -2;
+    str2[1] = -2;
+
+    cr_assert_eq(my_strncmp(str, str2, -1), strncmp(str, str2, -1));
 }
