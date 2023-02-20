@@ -20,6 +20,8 @@ strncmp_loop:
     mov r10b, byte[rsi + rcx]; move char of a + cursor in temp variable
     cmp byte[rdi + rcx], r10b; compare char of b + cursor and char of a + cursor
     jne strncmp_end
+    cmp r10b, 0
+    jl strncmp_end
     inc rcx; if not increment cursor
     jmp strncmp_loop; restart the loop
 
