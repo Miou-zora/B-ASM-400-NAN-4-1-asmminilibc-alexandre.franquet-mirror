@@ -18,10 +18,10 @@ strncmp_loop:
     cmp ecx, edx; check if cursor is arrived to the end of n
     ja strncmp_return; if ended they a equal until n
     mov r10b, byte[rsi + rcx]; move char of a + cursor in temp variable
+    cmp r10b, 0
+    jle strncmp_end
     cmp byte[rdi + rcx], r10b; compare char of b + cursor and char of a + cursor
     jne strncmp_end
-    cmp r10b, 0
-    jl strncmp_end
     inc rcx; if not increment cursor
     jmp strncmp_loop; restart the loop
 
