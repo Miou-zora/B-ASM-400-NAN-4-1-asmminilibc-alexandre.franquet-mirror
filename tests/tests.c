@@ -851,3 +851,22 @@ Test(my_strncmp, long_type, .init=loader)
 
     cr_assert_eq(my_strncmp(str, str2, -1), strncmp(str, str2, -1));
 }
+
+Test(my_strncmp, after_null, .init=loader)
+{
+    char *str = calloc(100, sizeof(char));
+    char *str2 = calloc(100, sizeof(char));
+
+    str[0] = 'a';
+    str[1] ='b';
+    str[2] = 0;
+    str[3] = 1;
+
+    str2[0] = 'a';
+    str2[1] = 'b';
+    str2[2] = 0;
+    str2[3] = 2;
+
+    cr_assert_eq(my_strncmp(str, str2, 5), strncmp(str, str2, 5));
+}
+
